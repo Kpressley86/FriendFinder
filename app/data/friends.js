@@ -62,6 +62,22 @@ var friendsArray = [
             2,
             1
         ]
+    },
+    {
+        name: "Blank Man",
+        photo: "http://localhost:3030",
+        score: [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     }
 ];
 

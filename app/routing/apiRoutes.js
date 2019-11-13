@@ -1,32 +1,32 @@
-// DEPENDENCIES //
-var path = require("path");
+// LOAD DATA //
 var friends = require("../data/friends.js");
 
+// ROUTING //
 module.exports = (app) => { 
     app.get("/api/friends", (req, res) => {
         res.json(friends);
     });
  
     app.post("/api/friends", (req, res) => {
-        console.log("post request received.\n");
        
-        var maxDifference = 50; //maximum allowed difference between users. 5 points per 10 questions (5 * 10 = 50)
-        var matchedFriend; //empty friend object to send back
-        var currentFriend = req.body; //set post request object to currentFriend
-        console.log("current friend: " + currentFriend + "\n");
+        var maxScore = 50;
+        var equallyDesp;
+        var user = req.body;
+        
         friends.forEach((friend) => { 
             var difference = 0; 
             for (i = 0; i < friend.scores.length; i++) {
                 
-                difference += Math.abs(friend.scores[i] - currentFriend.scores[i]);
+                difference += Math.abs(friend.scores[i] - user.scores[i]);
             }
-            if (difference < maxDifference) {
+            if (difference < maxScore) {
                 
-                maxDifference = difference;
-                matchedFriend = friend; 
+                maxScore = difference;
+                equallyDesp = friend; 
             };
         });
-        res.json(matchedFriend); 
+        
+        res.json(equallyDesp); 
         friends.push(req.body);
     });
 };
