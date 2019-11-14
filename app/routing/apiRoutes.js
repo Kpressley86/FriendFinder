@@ -1,32 +1,32 @@
-// LOAD DATA //
+// DEPENDENCIES //
+var path = require("path");
 var friends = require("../data/friends.js");
 
 // ROUTING //
-module.exports = (app) => { 
-    app.get("/api/friends", (req, res) => {
+module.exports = (app) => {
+    app.get('/api/friends', (req, res) => {
         res.json(friends);
     });
- 
-    app.post("/api/friends", (req, res) => {
-       
-        var maxScore = 50;
-        var equallyDesp;
-        var user = req.body;
-        
-        friends.forEach((friend) => { 
-            var difference = 0; 
-            for (i = 0; i < friend.scores.length; i++) {
-                
-                difference += Math.abs(friend.scores[i] - user.scores[i]);
+
+    app.post('/api/friends', (req, res) => {
+
+        var totalDifference;
+        var lowestDifference = 41;
+        var match;
+        var user = req.body
+
+        for (var i in friends) {
+            totalDifference = 0;
+
+            for (var j in friends[i].scores) {
+                totalDifference += Math.abs(friends[i].scores[j] - user.scores[j])
             }
-            if (difference < maxScore) {
-                
-                maxScore = difference;
-                equallyDesp = friend; 
-            };
-        });
-        
-        res.json(equallyDesp); 
-        friends.push(req.body);
+            if (totalDifference < lowestDifference) {
+                lowestDifference = totalDifference;
+                match = friends[i]
+            }
+        };
+        friends.push(user)
+        res.send([match, lowestDifference])
     });
 };
