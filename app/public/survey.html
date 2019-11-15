@@ -356,7 +356,7 @@
         if (unanswered.length > 0) {
             $('#message').html("You didn't answer: " + unanswered.join(", "))
         } else if (!isValidUrl) {
-            $('#message').html(picUrl + " is not a valid URL.<br>Please enter a valid URL")
+            $('#message').html(picUrl + " is not a valid URL")
         } else {
             $('#message').empty()
             // get slider values //
@@ -386,13 +386,13 @@
                     $('#match-stats').html(percent + "% Match")
                     $('#resultModal').modal('show')
                     
-                    for (var i = 0; i < result[0].scores.length; i++) {
+                    for (var i = 0; i < result[0].score.length; i++) {
                         var questionNum = i + 1
                         var qPanel = $('#p' + questionNum)
                         var resultDiv = $('#q' + questionNum + 'Result')
                         var userAnswer = answers.scores[i]
                         var compare = ("<center><h3>Your Answer: " + userAnswer + "  |  \
-                                    "  + result[0].name + "'s Answer: " + result[0].scores[i] + "</h3></center>")
+                                    "  + result[0].name + "'s Answer: " + result[0].score[i] + "</h3></center>")
                         resultDiv.css(
                             {
                                 'background-color': '#2c3e50', 'color': '#ffffff'
@@ -433,7 +433,7 @@
         }
         return unanswered;
     };
-    // helper function to validate the image
+    // Validate image url //
     function testImage(imgUrl, callback) {
         var timedOut = false;
         var timer;
